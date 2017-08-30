@@ -1,7 +1,8 @@
 lexer grammar DecafLexer;
 
-@header {
-package decaf;
+@header 
+{
+  package decaf;
 }
 
 options
