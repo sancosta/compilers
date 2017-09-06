@@ -15,17 +15,20 @@ tokens
   TK_class
 }
 
+RESERVEWORD : 'if' ;
+
 LCURLY : '{';
 RCURLY : '}';
 
-ID : ('a'..'z' | 'A'..'Z')+;
+ID : '_'?[a-zA-Z0-9_]+ ;
 
 WS_ : (' ' | '\n') -> skip;
 
-SL_COMMENT : '//' (~'\n')* '\n' -> skip;
+SL_COMMENT : '//' (~'\n'|ID)* '\n' -> skip;
 
-CHAR : '\'' (ESC|~'\'') '\'';
+CHAR : '\'' (ESC|'\\t'|'\\\\') '\'';
 STRING : '"' (ESC|~'"')* '"';
+INTLITERAL : '0x'[a-fA-F0-9]+ ;
 
 fragment
 ESC :  '\\' ('n'|'"');
