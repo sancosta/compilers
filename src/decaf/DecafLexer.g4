@@ -15,20 +15,24 @@ tokens
   TK_class
 }
 
-RESERVEWORD : 'if' ;
+BOOLEANLITERAL : ('false'|'true');
+RESERVEWORD : ('if'|'boolean'|'break'|'callout'|'class'|'continue'|'else'|'for'|'int'|'return'|'void') ;
 
-LCURLY : '{';
-RCURLY : '}';
+LCURLY : '{' ;
+RCURLY : '}' ;
 
-ID : '_'?[a-zA-Z0-9_]+ ;
+WS_ : (' '|'\n'|'\t') -> skip ;
+SL_COMMENT : '//' (~'\n')* '\n' -> skip ;
 
-WS_ : (' ' | '\n') -> skip;
+ID : [_a-zA-Z][_a-zA-Z0-9]* ;
+CHAR : '\'' (ESC|SPC) '\'' ;
+STRING : '\"' (ESC|SPC|ID|' ')+ '\"' ;
+INT : ('0x'[a-fA-F0-9]+|[0-9]+) ;
 
-SL_COMMENT : '//' (~'\n'|ID)* '\n' -> skip;
-
-CHAR : '\'' (ESC|'\\t'|'\\\\') '\'';
-STRING : '"' (ESC|~'"')* '"';
-INTLITERAL : '0x'[a-fA-F0-9]+ ;
+ESP : ('!'|'#'|'$'|'%'|'&'|')'|'('|'*'|'+'|','|'-'|':'|','|';'|'<'|'='|'>'|'?'|'@'|']'|'['|'^'|'_'|'`'|'|'|'~') ;
 
 fragment
-ESC :  '\\' ('n'|'"');
+ESC :  '\\' ('n'|'t'|'\"'|'\''|'\\') ;
+
+fragment
+SPC : ('a'..'z'|'A'..'Z'|'0'..'9'|'!'|'#'|'$'|'%'|'&'|')'|'('|'*'|'+'|','|'-'|'.'|':'|','|';'|'<'|'='|'>'|'?'|'@'|']'|'['|'^'|'_'|'`'|'|'|'~') ;

@@ -31,18 +31,24 @@ class Main {
 
 		        			switch (token.getType())
 		        			{
-							case DecafLexer.RESERVEWORD:
-		        					type = "";
-		        					break;
-							case DecafLexer.ID:
-		        					type = " IDENTIFIER";
-		        					break;
-							case DecafLexer.CHAR:
-								type = " CHARLITERAL";
-								break;
-							case DecafLexer.INTLITERAL:
-								type = " INTLITERAL";
-								break;
+								case DecafLexer.BOOLEANLITERAL:
+										type = " BOOLEANLITERAL";
+										break;
+								case DecafLexer.RESERVEWORD:
+										type = " ";
+										break;
+								case DecafLexer.ID:
+										type = " IDENTIFIER";
+										break;
+								case DecafLexer.CHAR:
+									type = " CHARLITERAL";
+									break;
+								case DecafLexer.INT:
+									type = " INTLITERAL";
+									break;
+								case DecafLexer.STRING:
+									type = " STRINGLITERAL";
+									break;
 		        			}
 		        			System.out.println (token.getLine() + type + " " + text);
 		        		}
