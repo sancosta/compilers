@@ -32,16 +32,19 @@ class Main {
 		        			switch (token.getType())
 		        			{
 								case DecafLexer.BOOLEANLITERAL:
-										type = " BOOLEANLITERAL";
-										break;
+									type = " BOOLEANLITERAL";
+									break;
 								case DecafLexer.RESERVEWORD:
-										type = " ";
-										break;
+									type = " ";
+									break;
 								case DecafLexer.ID:
-										type = " IDENTIFIER";
-										break;
+									type = " IDENTIFIER";
+									break;
 								case DecafLexer.CHAR:
 									type = " CHARLITERAL";
+									break;
+								case DecafLexer.HEXDECIMAL:
+									type = " INTLITERAL";
 									break;
 								case DecafLexer.INT:
 									type = " INTLITERAL";
@@ -54,7 +57,6 @@ class Main {
 		        		}
 		        		done = true;
         			} catch(Exception e) {
-        	        	// print the error:
         	            System.out.println(CLI.infile+" "+e);
         	            lexer.skip();
         	        }

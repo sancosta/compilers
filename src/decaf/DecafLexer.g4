@@ -15,25 +15,60 @@ tokens
   TK_class
 }
 
-BOOLEANLITERAL : ('false'|'true');
-RESERVEWORD : ('if'|'boolean'|'break'|'callout'|'class'|'continue'|'else'|'for'|'int'|'return'|'void') ;
+TK_CLASS : 'class Program' ;
+
+BOOLEANLITERAL : ( RFALSE | RTRUE );
+
+RFALSE : 'false' ;
+
+RTRUE : 'true' ;
+
+RIF : 'if' ;
+
+RBOOLEAN : 'boolean' ;
+
+RBREAK : 'break' ;
+
+RCALLOUT : 'callout' ;
+
+RCLASS : 'class' ;
+
+RCONTINUE : 'continue' ;
+
+RELSE : 'else' ;
+
+RFOR : 'for' ;
+
+RINT : 'int' ;
+
+RRETURN : 'return' ;
+
+RVOID : 'void' ;
+
+RESERVEWORD : (RIF|RBOOLEAN|RBREAK|RCALLOUT|RCLASS|RCONTINUE|RELSE|RFOR|RINT|RRETURN|RVOID) ;
 
 LCURLY : '{' ;
+
 RCURLY : '}' ;
 
 WS_ : (' '|'\n'|'\t') -> skip ;
+
 SL_COMMENT : '//' (~'\n')* '\n' -> skip ;
 
 ID : [_a-zA-Z][_a-zA-Z0-9]* ;
-CHAR : '\'' (ESC|SPC) '\'' ;
-STRING : '\"' (ESC|SPC|ID|' ')+ '\"' ;
-INT : ('0x'[a-fA-F0-9]+|[0-9]+) ;
 
-OPERADOR : ('+'|'-'|'*'|'>'|'<'|'<='|'>='|'!='|'&&') ;
+CHAR : '\'' (ESC|SPC) '\'' ;
+
+STRING : '\"' (ESC|SPC|ID|' ')+ '\"' ;
+
+HEXDECIMAL : '0x'[a-fA-F0-9]+ ;
+
+INT : [0-9]+ (~'x') ;
+
+OPERADOR : ('+'|'-'|'*'|'>'|'<'|'<='|'>='|'!='|'&&'|'=='|'||') ;
+
 ESP : ('!'|'#'|'$'|'%'|'&'|')'|'('|'*'|'+'|','|'-'|':'|','|';'|'<'|'='|'>'|'@'|']'|'['|'^'|'_'|'`'|'|'|'~') ;
 
-fragment
-ESC :  '\\' ('n'|'t'|'\"'|'\''|'\\') ;
-
-fragment
-SPC : ('a'..'z'|'A'..'Z'|'0'..'9'|'!'|'#'|'$'|'%'|'&'|')'|'('|'*'|'+'|','|'-'|'.'|':'|','|';'|'<'|'='|'>'|'?'|'@'|']'|'['|'^'|'_'|'`'|'|'|'~') ;
+fragment ESC :  '\\' ('n'|'t'|'\"'|'\''|'\\') ;
+fragment SPC : ('a'..'z'|'A'..'Z'|'0'..'9'|'!'|'#'|'$'|'%'|'&'|')'|'('|'*'|'+'|','|'-'|'.'|':'|','|';'|'<'|'='|'>'|'?'|'@'|']'|'['|'^'|'_'|'`'|'|'|'~') ;
+fragment HEX : ('a'..'z'|'A'..'Z'|'!'|'#'|'$'|'%'|'&'|')'|'('|'*'|'+'|','|'-'|'.'|':'|','|';'|'<'|'='|'>'|'?'|'@'|']'|'['|'^'|'_'|'`'|'|'|'~') ;
