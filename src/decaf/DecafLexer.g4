@@ -17,7 +17,7 @@ tokens
 
 TK_CLASS : 'class Program' ;
 
-BOOLEANLITERAL : ( RFALSE | RTRUE );
+BOOLEANLITERAL : (RFALSE|RTRUE);
 
 RFALSE : 'false' ;
 

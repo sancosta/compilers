@@ -1,19 +1,30 @@
 package decaf;
 
 import java.io.*;
+import java.util.Arrays;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 //import antlr.Token;
+
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.gui.TreeViewer;
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
+
 import java6035.tools.CLI.*;
 
 class Main {
     public static void main(String[] args) {
-        try {
+        
+		try 
+		{
         	CLI.parse (args, new String[0]);
 
-        	InputStream inputStream = args.length == 0 ?
-                    System.in : new java.io.FileInputStream(CLI.infile);
+        	InputStream inputStream = args.length == 0 ? System.in : new java.io.FileInputStream(CLI.infile);
 
         	if (CLI.target == CLI.SCAN)
         	{
@@ -64,13 +75,45 @@ class Main {
         	}
         	else if (CLI.target == CLI.PARSE || CLI.target == CLI.DEFAULT)
         	{
-        		DecafLexer lexer = new DecafLexer(new ANTLRInputStream(inputStream));
+        		
+				DecafLexer lexer = new DecafLexer(new ANTLRInputStream(inputStream));
 				CommonTokenStream tokens = new CommonTokenStream(lexer);
         		DecafParser parser = new DecafParser(tokens);
-                parser.program();
+                //parser.program();
+
+                // Adiciona as regras semÃ¢nticas
+                ParseTree tree = parser.program();
+
+                if (CLI.debug) 
+				{
+                    
+					// Se estiver no modo debug imprime a Ã¡rvore de parsing
+                    // Create Tree View
+                    // Source: https://stackoverflow.com/questions/23809005/how-to-display-antlr-tree-gui
+
+                    //show AST in console
+                    System.out.println(tree.toStringTree(parser));
+
+                    //show AST in GUI
+                    JFrame frame = new JFrame("Antlr AST");
+                    JPanel panel = new JPanel();
+                    TreeViewer viewr = new TreeViewer(Arrays.asList(parser.getRuleNames()),tree);
+                    
+					viewr.setScale(1.5);
+                    panel.add(viewr);
+                    frame.add(panel);
+                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					frame.setLocationRelativeTo(null);
+					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                    frame.setVisible(true);
+
+                }
+
         	}
         	
-        } catch(Exception e) {
+        } 
+		catch(Exception e) 
+		{
         	// print the error:
             System.out.println(CLI.infile+" "+e);
         }
