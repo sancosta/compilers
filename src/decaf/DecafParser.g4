@@ -85,7 +85,3 @@ bool_literal: BOOLEANLITERAL ;
 char_literal: CHAR ;
 
 string_literal: STRING ;
-
-
-
-
