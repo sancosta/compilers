@@ -15,65 +15,76 @@ tokens
   TK_class
 }
 
-TK_CLASS : 'class Program' ;
+TK_CLASS        : 'class Program' ;
 
-BOOLEANLITERAL : (RFALSE|RTRUE);
+BOOLEANLITERAL  : (RFALSE|RTRUE) ;
 
-RFALSE : 'false' ;
+RFALSE          : 'false' ;
 
-RTRUE : 'true' ;
+RTRUE           : 'true' ;
 
-RIF : 'if' ;
+RIF             : 'if' ;
 
-RBOOLEAN : 'boolean' ;
+RBOOLEAN        : 'boolean' ;
 
-RBREAK : 'break' ;
+RBREAK          : 'break' ;
 
-RCALLOUT : 'callout' ;
+RCALLOUT        : 'callout' ;
 
-RCLASS : 'class' ;
+RCLASS          : 'class' ;
 
-RCONTINUE : 'continue' ;
+RCONTINUE       : 'continue' ;
 
-RELSE : 'else' ;
+RELSE           : 'else' ;
 
-RFOR : 'for' ;
+RFOR            : 'for' ;
 
-RINT : 'int' ;
+RINT            : 'int' ;
 
-RRETURN : 'return' ;
+RRETURN         : 'return' ;
 
-RVOID : 'void' ;
+RVOID           : 'void' ;
 
-RESERVEWORD : (RIF|RBOOLEAN|RBREAK|RCALLOUT|RCLASS|RCONTINUE|RELSE|RFOR|RINT|RRETURN|RVOID) ;
+RESERVEWORD     : (RIF|RBOOLEAN|RBREAK|RCALLOUT|RCLASS|RCONTINUE|RELSE|RFOR|RINT|RRETURN|RVOID) ;
 
-LCURLY : '{' ;
+LCURLY          : '{' ;
 
-RCURLY : '}' ;
+RCURLY          : '}' ;
 
-WS_ : (' '|'\n'|'\t') -> skip ;
+WS_             : (' '|'\n'|'\t') -> skip ;
 
-SL_COMMENT : '//' (~'\n')* '\n' -> skip ;
+SL_COMMENT      : '//' (~'\n')* '\n' -> skip ;
 
-ID : [_a-zA-Z][_a-zA-Z0-9]* ;
+ID              : [_a-zA-Z][_a-zA-Z0-9]* ;
 
-CHAR : '\'' (ESC|SPC) '\'' ;
+CHAR            : '\'' (ESC|SPC|CES|UNI) '\'' ;
 
-STRING : '\"' (ESC|SPC|ID|' ')+ '\"' ;
+STRING          : '\"' (ESC|SPC|CES|UNI|' ')+ '\"' ;
 
-HEXDECIMAL : '0x'[a-fA-F0-9]+ ;
+INT             : [0-9]+ ~('x'|')'|'('|']'|'['|';'|'.'|','|'-') ;
 
-INT : [0-9]+ (~'x') ;
+HEXDECIMAL      : '0x' [a-fA-F0-9]+ ;
 
-OP_REL : ('>'|'<'|'<='|'>=');
-OP_COD : ('&&'|'||');
-OP_IGU : ('!='|'==');
-OP_ARI : ('+'|'-'|'*'|'/'|'%');
-OP_ATR : ('='|'-='|'+=');
-OPERAD : (OP_REL|OP_COD|OP_IGU|OP_ARI|OP_ATR);
+OP_REL          : ('>'|'<'|'<='|'>=') ;
 
-ESP : ('!'|'#'|'$'|'%'|'&'|')'|'('|'*'|'+'|','|'-'|':'|','|';'|'<'|'='|'>'|'@'|']'|'['|'^'|'_'|'`'|'|'|'~') ;
+OP_COD          : ('&&'|'||') ;
 
-fragment ESC :  '\\' ('n'|'t'|'\"'|'\''|'\\') ;
-fragment SPC : ('a'..'z'|'A'..'Z'|'0'..'9'|'!'|'#'|'$'|'%'|'&'|')'|'('|'*'|'+'|','|'-'|'.'|':'|','|';'|'<'|'='|'>'|'?'|'@'|']'|'['|'^'|'_'|'`'|'|'|'~') ;
-fragment HEX : ('a'..'z'|'A'..'Z'|'!'|'#'|'$'|'%'|'&'|')'|'('|'*'|'+'|','|'-'|'.'|':'|','|';'|'<'|'='|'>'|'?'|'@'|']'|'['|'^'|'_'|'`'|'|'|'~') ;
+OP_IGU          : ('!='|'==') ;
+
+OP_ARI          : ('+'|'-'|'*'|'/'|'%') ;
+
+OP_ATR          : ('='|'-='|'+=') ;
+
+OP_GEL          : (OP_REL|OP_COD|OP_IGU|OP_ARI|OP_ATR) ;
+
+CR_DEL          : (')'|'('|']'|'[') ;
+
+CR_ESP          : (';'|'-'|',');
+
+fragment ESC    : '\\' ('n'|'t'|'\"'|'\''|'\\') ;
+
+fragment SPC    : ('a'..'z'|'A'..'Z'|'0'..'9') ;
+
+fragment CES    : ('?'|'#'|'$'|'@'|'^'|'.'|':'|'_'|'`'|'~') ;
+
+fragment UNI    : ('<'|'>'|'='|'&'|'|'|'!'|'+'|'-'|'*'|'/'|'%'|')'|'('|']'|'['|';'|',') ;
