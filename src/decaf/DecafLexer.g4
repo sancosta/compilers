@@ -47,10 +47,6 @@ RVOID           : 'void' ;
 
 RESERVEWORD     : (RIF|RBOOLEAN|RBREAK|RCALLOUT|RCLASS|RCONTINUE|RELSE|RFOR|RINT|RRETURN|RVOID) ;
 
-LCURLY          : '{' ;
-
-RCURLY          : '}' ;
-
 WS_             : (' '|'\n'|'\t') -> skip ;
 
 SL_COMMENT      : '//' (~'\n')* '\n' -> skip ;
@@ -77,9 +73,27 @@ OP_ATR          : ('='|'-='|'+=') ;
 
 OP_GEL          : (OP_REL|OP_COD|OP_IGU|OP_ARI|OP_ATR) ;
 
-CR_DEL          : (')'|'('|']'|'[') ;
+CL_CUR          : '{' ;
 
-CR_ESP          : (';'|'-'|',');
+CR_CUR          : '}' ;
+
+CL_COC          : '[' ;
+
+CR_COC          : ']' ;
+
+CL_PAR          : '(' ;
+
+CR_PAR          : ')' ;
+
+CT_VIG          : ',' ;
+
+CT_END          : ';' ;
+
+CT_MIN          : '-' ;
+
+CT_IGU          : '=' ;
+
+CT_ITG          : '!' ;
 
 fragment ESC    : '\\' ('n'|'t'|'\"'|'\''|'\\') ;
 
