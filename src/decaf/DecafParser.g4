@@ -13,7 +13,7 @@ options
 
 program         : TK_CLASS CL_CUR field_decl* method_decl* CR_CUR ;
 
-field_decl      : type id (CT_VIG type id)*
+field_decl      : type id (CT_VIG type id)* CT_END
                   | type id CL_COC int_literal CR_COC (CT_VIG type id CL_COC int_literal CR_COC)* CT_END ;
 
 method_decl     : ( type | RVOID ) id CL_PAR ( type id (CT_VIG type id)* )* CR_PAR block ;
@@ -36,13 +36,13 @@ statement       : location assign_op expr CT_END
 
 assign_op       : OP_ATR ;
 
-method_call     : method_name CL_PAR expr (CT_VIG expr)* CR_PAR
+method_call     : method_name CL_PAR (expr (CT_VIG expr)*)* CR_PAR
                   | RCALLOUT CL_PAR string_literal (CT_VIG callout_arg)* CR_PAR ;
 
 method_name     : id ;
 
 location        : id
-                  | id (expr)* ;
+                  | id CL_COC expr CR_COC ;
 
 expr            : location
                   | method_call
@@ -78,9 +78,9 @@ hex_digit       : HEXDECIMAL ;
 int_literal     : decimal_literal
                   | hex_literal ;
 
-decimal_literal : digit digit* ;
+decimal_literal : digit (digit)* ;
 
-hex_literal     : hex_digit hex_digit* ;
+hex_literal     : hex_digit (hex_digit)* ;
 
 bool_literal    : BOOLEANLITERAL ;
 
