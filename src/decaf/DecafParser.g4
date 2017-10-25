@@ -28,13 +28,15 @@ type            : RINT
 statement       : location assign_op expr CT_END
                   | method_call CT_END
                   | RIF CL_PAR expr CR_PAR block (RELSE block)*
-                  | RFOR CL_PAR id CT_IGU expr CT_END expr CT_END block CR_PAR
+                  | RFOR id OP_ATR_I expr CT_VIG expr block
                   | RRETURN expr* CT_END
                   | RBREAK CT_END
                   | RCONTINUE CT_END
                   | block ;
 
-assign_op       : OP_ATR ;
+assign_op       : OP_ATR_I
+                  | OP_ATR_M
+                  | OP_ATR_P ;
 
 method_call     : method_name CL_PAR (expr (CT_VIG expr)*)* CR_PAR
                   | RCALLOUT CL_PAR string_literal (CT_VIG callout_arg)* CR_PAR ;
@@ -48,7 +50,7 @@ expr            : location
                   | method_call
                   | literal
                   | expr bin_op expr
-                  | CT_MIN expr
+                  | OP_ARI_M expr
                   | CT_ITG expr
                   | CL_PAR expr CR_PAR ;
 
@@ -60,7 +62,11 @@ bin_op          : arith_op
                   | eq_op
                   | cond_op ;
 
-arith_op        : OP_ARI ;
+arith_op        : OP_ARI_P
+                  | OP_ARI_M
+                  | OP_ARI_X
+                  | OP_ARI_D
+                  | OP_ARI_R ;
 
 rel_op          : OP_REL ;
 
@@ -72,12 +78,7 @@ literal         : int_literal
                   | char_literal
                   | bool_literal ;
 
-id              : alpha alpha_num* ;
-
-alpha_num       : alpha
-                  | digit ;
-
-alpha           : ID ;
+id              : ID ;
 
 digit           : INT ;
 
@@ -90,7 +91,8 @@ decimal_literal : digit digit* ;
 
 hex_literal     : hex_digit hex_digit* ;
 
-bool_literal    : BOOLEANLITERAL ;
+bool_literal    : RFALSE
+                  | RTRUE ;
 
 char_literal    : CHAR ;
 
