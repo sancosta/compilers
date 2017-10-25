@@ -57,7 +57,7 @@ CHAR            : '\'' (ESC|SPC|CES|UNI) '\'' ;
 
 STRING          : '\"' (ESC|SPC|CES|UNI|' ')+ '\"' ;
 
-INT             : [0-9]+ ~('x'|')'|'('|']'|'['|';'|'.'|','|'-') ;
+INT             : ('-')* [0-9]+ ;
 
 HEXDECIMAL      : '0x' [a-fA-F0-9]+ ;
 

@@ -55,10 +55,18 @@ expr            : location
 callout_arg     : expr
                   | string_literal ;
 
-bin_op          : OP_ARI
-                  | OP_REL
-                  | OP_IGU
-                  | OP_COD ;
+bin_op          : arith_op
+                  | rel_op
+                  | eq_op
+                  | cond_op ;
+
+arith_op        : OP_ARI ;
+
+rel_op          : OP_REL ;
+
+eq_op           : OP_IGU ;
+
+cond_op         : OP_COD ;
 
 literal         : int_literal
                   | char_literal
@@ -78,9 +86,9 @@ hex_digit       : HEXDECIMAL ;
 int_literal     : decimal_literal
                   | hex_literal ;
 
-decimal_literal : digit (digit)* ;
+decimal_literal : digit digit* ;
 
-hex_literal     : hex_digit (hex_digit)* ;
+hex_literal     : hex_digit hex_digit* ;
 
 bool_literal    : BOOLEANLITERAL ;
 
