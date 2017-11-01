@@ -3,6 +3,7 @@ parser grammar DecafParser;
 @header 
 {
   package decaf;
+  import org.antlr.symtab.*;
 }
 
 options

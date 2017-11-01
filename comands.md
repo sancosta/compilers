@@ -41,3 +41,7 @@
 - Dentro da pasta skeleton execute o comando abaixo para realizar os **testes de parser**.
 
         java -jar dist/Compiler.jar -target parse -debug ../parser/legal-01
+
+- Dentro da pasta skeleton execute o comando abaixo para realizar os **testes de semântica**.
+
+        java -jar dist/Compiler.jar -target inter -debug ../parser/legal-01
