@@ -14,14 +14,14 @@ options
 
 program         : TK_CLASS CL_CUR field_decl* method_decl* CR_CUR ;
 
-field_decl      : type id (CT_VIG type id)* CT_END
-                  | type id CL_COC int_literal CR_COC (CT_VIG type id CL_COC int_literal CR_COC)* CT_END ;
+field_decl      : type ID (CT_VIG type ID)* CT_END
+                  | type ID CL_COC int_literal CR_COC (CT_VIG type ID CL_COC int_literal CR_COC)* CT_END ;
 
-method_decl     : ( type | RVOID ) id CL_PAR ( type id (CT_VIG type id)* )* CR_PAR block ;
+method_decl     : ( type | RVOID ) ID CL_PAR ( type ID (CT_VIG type ID)* )* CR_PAR block ;
 
 block           : CL_CUR var_decl* statement* CR_CUR ;
 
-var_decl        : type id (CT_VIG type id)* CT_END ;
+var_decl        : type ID (CT_VIG (type ID | ID))* CT_END ;
 
 type            : RINT 
                   | RBOOLEAN ;
@@ -29,7 +29,7 @@ type            : RINT
 statement       : location assign_op expr CT_END
                   | method_call CT_END
                   | RIF CL_PAR expr CR_PAR block (RELSE block)*
-                  | RFOR id OP_ATR_I expr CT_VIG expr block
+                  | RFOR ID OP_ATR_I expr CT_VIG expr block
                   | RRETURN expr* CT_END
                   | RBREAK CT_END
                   | RCONTINUE CT_END
@@ -42,10 +42,10 @@ assign_op       : OP_ATR_I
 method_call     : method_name CL_PAR (expr (CT_VIG expr)*)* CR_PAR
                   | RCALLOUT CL_PAR string_literal (CT_VIG callout_arg)* CR_PAR ;
 
-method_name     : id ;
+method_name     : ID ;
 
-location        : id
-                  | id CL_COC expr CR_COC ;
+location        : ID
+                  | ID CL_COC expr CR_COC ;
 
 expr            : location
                   | method_call
@@ -78,8 +78,6 @@ cond_op         : OP_COD ;
 literal         : int_literal
                   | char_literal
                   | bool_literal ;
-
-id              : ID ;
 
 digit           : INT ;
 

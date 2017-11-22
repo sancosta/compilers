@@ -11,6 +11,8 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
+
 /**
  * This class defines basic symbols and scopes for Decaf language
  */
@@ -33,9 +35,9 @@ public class DecafSymbolsAndScopes extends DecafParserBaseListener {
 
     @Override
     public void enterMethod_decl(DecafParser.Method_declContext ctx) {
-        String name = ctx.id().getText();
-        int typeTokenType = ctx.type().start.getType();
-        DecafSymbol.Type type = this.getType(typeTokenType);
+        String name = ctx.ID().get(0).getText();
+        //int typeTokenType = ctx.type().start.getType();
+        //DecafSymbol.Type type = this.getType(typeTokenType);
 
         // push new scope by making new one that points to enclosing scope
         FunctionSymbol function = new FunctionSymbol(name);
@@ -65,18 +67,18 @@ public class DecafSymbolsAndScopes extends DecafParserBaseListener {
 
     @Override
     public void enterField_decl(DecafParser.Field_declContext ctx) {
-        defineVar(ctx.type(), ctx.id().getSymbol());
+        defineVar(ctx.type().get(0), ctx.ID().get(0).getSymbol());
     }
 
     @Override
     public void exitField_decl(DecafParser.Field_declContext ctx) {
-        String name = ctx.id().getSymbol().getText();
+        String name = ctx.ID().get(0).getSymbol().getText();
         Symbol var = currentScope.resolve(name);
         if ( var==null ) {
-            this.error(ctx.id().getSymbol(), "no such variable: "+name);
+            this.error(ctx.ID().get(0).getSymbol(), "no such variable: "+name);
         }
         if ( var instanceof FunctionSymbol ) {
-            this.error(ctx.id().getSymbol(), name+" is not a variable");
+            this.error(ctx.ID().get(0).getSymbol(), name+" is not a variable");
         }
     }
 
@@ -131,9 +133,9 @@ public class DecafSymbolsAndScopes extends DecafParserBaseListener {
      */
     public static DecafSymbol.Type getType(int tokenType) {
         switch ( tokenType ) {
-            case DecafParser.VOID :  
+            case DecafParser.RVOID :  
                 return DecafSymbol.Type.tVOID;
-            case DecafParser.INTEGER_LITERAL :   
+            case DecafParser.RINT :   
                 return DecafSymbol.Type.tINT;
         }
         return DecafSymbol.Type.tINVALID;

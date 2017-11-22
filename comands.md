@@ -44,4 +44,4 @@
 
 - Dentro da pasta skeleton execute o comando abaixo para realizar os **testes de semântica**.
 
-        java -jar dist/Compiler.jar -target inter -debug ../parser/legal-01
+        java -jar dist/Compiler.jar -target inter -debug ../semantics/legal-01.dcf
